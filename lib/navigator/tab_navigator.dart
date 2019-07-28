@@ -37,7 +37,7 @@ class _TabNavigatorState extends State<TabNavigator> {
                 activeIcon: Icon(Icons.home, color: _activeColor),
                 title: Text("首页",
                     style: TextStyle(
-                        color: _currentIndex != 1
+                        color: _currentIndex != 0
                             ? _defaultColor
                             : _activeColor))),
             BottomNavigationBarItem(
@@ -45,7 +45,7 @@ class _TabNavigatorState extends State<TabNavigator> {
                 activeIcon: Icon(Icons.search, color: _activeColor),
                 title: Text("搜索",
                     style: TextStyle(
-                        color: _currentIndex != 2
+                        color: _currentIndex != 1
                             ? _defaultColor
                             : _activeColor))),
             BottomNavigationBarItem(
@@ -53,7 +53,7 @@ class _TabNavigatorState extends State<TabNavigator> {
                 activeIcon: Icon(Icons.camera_alt, color: _activeColor),
                 title: Text("旅拍",
                     style: TextStyle(
-                        color: _currentIndex != 3
+                        color: _currentIndex != 2
                             ? _defaultColor
                             : _activeColor))),
             BottomNavigationBarItem(
@@ -62,7 +62,7 @@ class _TabNavigatorState extends State<TabNavigator> {
                 title: Text("首页",
                     style: TextStyle(
                         color:
-                            _currentIndex != 4 ? _defaultColor : _activeColor)))
+                            _currentIndex != 3 ? _defaultColor : _activeColor)))
           ]),
     );
   }
