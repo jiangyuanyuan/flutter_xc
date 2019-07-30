@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutter_xc/dao/home_dao.dart';
 
 
 const APPBAR_OFFSET =100;
@@ -14,6 +16,7 @@ class _HomePageState extends State<HomePage>{
     "https://dimg04.c-ctrip.com/images/350p1600000109qx2C354_C_500_280_Q80.jpg",
     "https://dimg06.c-ctrip.com/images/350r0o000000enmc1BFDC_C_500_280_Q80.jpg"
   ];
+  var resultString = "";
   double appBarAlpha = 0;
   @override
   Widget build(BuildContext context) {
@@ -48,7 +51,7 @@ class _HomePageState extends State<HomePage>{
                       ),
                       Container(
                         height: 800,
-                        child: ListTile(title: Text("哈哈哈")),
+                        child: ListTile(title: Text(resultString)),
                       )
                     ],
                   ))
@@ -72,6 +75,12 @@ class _HomePageState extends State<HomePage>{
     );
   }
 
+
+  @override
+  void initState() {
+    _loadDate();
+  }
+
   _Scroll(pixels) {
     double alpha = pixels/APPBAR_OFFSET;
     if(alpha<0){
@@ -81,6 +90,18 @@ class _HomePageState extends State<HomePage>{
     }
     setState(() {
       appBarAlpha=alpha;
+    });
+  }
+
+  _loadDate(){
+    HomeDao.fetch().then((result){
+      setState(() {
+        resultString = json.encode(result);
+      });
+    }).catchError((e){
+      setState(() {
+        resultString = e.toString();
+      });
     });
   }
 
