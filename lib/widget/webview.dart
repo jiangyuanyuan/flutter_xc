@@ -2,45 +2,76 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-class WebView extends StatefulWidget{
+
+class WebView extends StatefulWidget {
   final String url;
   final String statusBarColor;
   final String title;
   final bool hideAppbar;
   final bool backForbid;
 
-  const WebView({Key key, this.url, this.statusBarColor, this.title, this.hideAppbar, this.backForbid}) : super(key: key);
-
+  const WebView(
+      {Key key,
+      this.url,
+      this.statusBarColor,
+      this.title,
+      this.hideAppbar,
+      this.backForbid})
+      : super(key: key);
 
   @override
-  State<StatefulWidget> createState() =>_WebViewState();
+  State<StatefulWidget> createState() => _WebViewState();
 }
 
-class _WebViewState extends State<WebView>{
-  final webviewReference =  FlutterWebviewPlugin();
+class _WebViewState extends State<WebView> {
+  final webviewReference = FlutterWebviewPlugin();
   StreamSubscription<String> _onUrlChanged;
   StreamSubscription<WebViewStateChanged> _onStateChanged;
   StreamSubscription<WebViewHttpError> _onHttpError;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    String statusBarColorStr = widget.statusBarColor ?? "ffffff";
+    Color backButtonColor;
+    if (statusBarColorStr == "ffffff") {
+      backButtonColor == Colors.black;
+    } else {
+      backButtonColor == Colors.white;
+    }
+
+    return
+      Scaffold(
       body: Column(
         children: <Widget>[
-          _appBar(null,null)
-
+          _appBar(Color(int.parse("0xff" + statusBarColorStr)), backButtonColor),
+          Expanded(
+              flex: 1,
+              child: WebviewScaffold(
+                userAgent: 'null',
+                url: widget.url,
+                withZoom: true,
+                withLocalStorage: true,
+                hidden: true,
+                initialChild: Container(
+                  color: Colors.white,
+                  child: Text("waiting..."),
+                ),
+              ))
         ],
       ),
     );
   }
-  _appBar(Color backColor,Color btnBackColor){
-    if(widget.hideAppbar??false){
+
+  _appBar(Color backColor, Color btnBackColor) {
+    if (widget.hideAppbar ?? false) {
       return Container(
         color: backColor,
         height: 30,
       );
     }
     return Container(
-      child: FractionallySizedBox(
+        color: btnBackColor,
+        padding: EdgeInsets.fromLTRB(0, 40, 0, 10),
         child: Stack(
           children: <Widget>[
             GestureDetector(
@@ -57,25 +88,23 @@ class _WebViewState extends State<WebView>{
               left: 0,
               right: 0,
               child: Center(
-                child: Text(widget?.title,
-                style: TextStyle(fontSize: 12),),
+                child: Text(
+                  widget?.title ?? "",
+                  style: TextStyle(fontSize: 12),
+                ),
               ),
             )
           ],
-        ),
-      ),
-    );
+        ));
   }
 
   @override
   void initState() {
     super.initState();
     webviewReference.close();
-    _onUrlChanged =  webviewReference.onUrlChanged?.listen((String url){
-
-    });
-    webviewReference.onStateChanged.listen((WebViewStateChanged state){
-      switch(state.type){
+    _onUrlChanged = webviewReference.onUrlChanged?.listen((String url) {});
+    webviewReference.onStateChanged.listen((WebViewStateChanged state) {
+      switch (state.type) {
         case WebViewState.startLoad:
           break;
         case WebViewState.shouldStart:
@@ -86,11 +115,9 @@ class _WebViewState extends State<WebView>{
           break;
       }
     });
-    webviewReference.onHttpError.listen((WebViewHttpError error){
+    webviewReference.onHttpError.listen((WebViewHttpError error) {
       print(error);
     });
-
-
   }
 
   @override
@@ -101,5 +128,4 @@ class _WebViewState extends State<WebView>{
     webviewReference.dispose();
     super.dispose();
   }
-
 }
