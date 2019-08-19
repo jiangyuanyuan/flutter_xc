@@ -7,6 +7,7 @@ import 'package:flutter_xc/model/GridNavModel.dart';
 import 'package:flutter_xc/model/HomeModel.dart';
 import 'package:flutter_xc/widget/grid_nav.dart';
 import 'package:flutter_xc/widget/local_nav.dart';
+import 'package:flutter_xc/widget/sub_nav.dart';
 
 const APPBAR_OFFSET = 100;
 
@@ -23,6 +24,7 @@ class _HomePageState extends State<HomePage> {
   var resultString = "";
   double appBarAlpha = 0;
   List<CommonModel> localNavList = [];
+  List<CommonModel> subNavList = [];
   GridNavModel gridNavModel;
 
   @override
@@ -64,6 +66,10 @@ class _HomePageState extends State<HomePage> {
                         Padding(
                           padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
                           child: GridNav(gridNavModel: gridNavModel),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
+                          child: SubNav(subNavModel: subNavList),
                         ),
                         Container(
                           height: 800,
@@ -111,6 +117,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         localNavList = model.localNavList;
         gridNavModel = model.gridNav;
+        subNavList = model.subNavList;
       });
     } catch (e) {
       print(e);
