@@ -5,8 +5,10 @@ import 'package:flutter_xc/dao/home_dao.dart';
 import 'package:flutter_xc/model/CommonModel.dart';
 import 'package:flutter_xc/model/GridNavModel.dart';
 import 'package:flutter_xc/model/HomeModel.dart';
+import 'package:flutter_xc/model/SalesBoxModel.dart';
 import 'package:flutter_xc/widget/grid_nav.dart';
 import 'package:flutter_xc/widget/local_nav.dart';
+import 'package:flutter_xc/widget/sales_box.dart';
 import 'package:flutter_xc/widget/sub_nav.dart';
 
 const APPBAR_OFFSET = 100;
@@ -25,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   double appBarAlpha = 0;
   List<CommonModel> localNavList = [];
   List<CommonModel> subNavList = [];
+  SalesBoxModel salesBox;
   GridNavModel gridNavModel;
 
   @override
@@ -71,8 +74,12 @@ class _HomePageState extends State<HomePage> {
                           padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
                           child: SubNav(subNavModel: subNavList),
                         ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
+                          child: SalesBox(salesBox: salesBox),
+                        ),
                         Container(
-                          height: 800,
+
                           child: ListTile(title: Text(resultString)),
                         )
                       ],
@@ -118,6 +125,7 @@ class _HomePageState extends State<HomePage> {
         localNavList = model.localNavList;
         gridNavModel = model.gridNav;
         subNavList = model.subNavList;
+        salesBox = model.salesBox;
       });
     } catch (e) {
       print(e);
