@@ -17,10 +17,7 @@ class SalesBox extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(6))),
-      child: Padding(
-        padding: EdgeInsets.all(7),
-        child: _items(context),
-      ),
+      child: _items(context),
     );
   }
 
@@ -30,7 +27,7 @@ class SalesBox extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
         _item(context, leftCard, big, true, last),
-        _item(context, leftCard, big, false, last)
+        _item(context, rightCard, big, false, last)
       ],
     );
   }
@@ -52,21 +49,22 @@ class SalesBox extends StatelessWidget {
       children: <Widget>[
         Container(
           height: 44,
-          margin: EdgeInsets.only(left: 10),
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.only(left: 10,right: 10),
           decoration: BoxDecoration(
               border: Border(
                   bottom: BorderSide(width: 1, color: Color(0xfff2f2f2)))),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Image.network(
                 salesBox.icon,
-                height: 18,
+                height: 15,
                 fit: BoxFit.fill,
               ),
               Container(
-
-                margin: EdgeInsets.only(right: 8),
+                padding: EdgeInsets.fromLTRB(10, 1, 8, 1),
+                margin: EdgeInsets.only(right: 7),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
                     gradient: LinearGradient(
@@ -85,7 +83,19 @@ class SalesBox extends StatelessWidget {
               )
             ],
           ),
-        )
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: items.sublist(0,1),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: items.sublist(1,2),
+        ),
+        Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: items.sublist(2,3),
+    )
       ],
     );
   }
@@ -108,7 +118,7 @@ class SalesBox extends StatelessWidget {
                   bottom: last ? BorderSide.none : boderSide)),
           child: Image.network(
             model.icon,
-            width: MediaQuery.of(context).size.width / 2 - 5,
+            width: MediaQuery.of(context).size.width / 2 - 7,
             height: big ? 129 : 80,
           ),
         ));

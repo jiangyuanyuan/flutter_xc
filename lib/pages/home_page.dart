@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             MediaQuery.removePadding(
                 removeTop: true,
+                removeBottom: true,
                 context: context,
                 child: NotificationListener(
                     onNotification: (scrollNotication) {
@@ -75,13 +76,10 @@ class _HomePageState extends State<HomePage> {
                           child: SubNav(subNavModel: subNavList),
                         ),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                           child: SalesBox(salesBox: salesBox),
                         ),
-                        Container(
 
-                          child: ListTile(title: Text(resultString)),
-                        )
                       ],
                     ))),
             Opacity(
